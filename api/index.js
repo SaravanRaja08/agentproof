@@ -72,12 +72,12 @@ app.post("/api/tamper", async (req, res) => {
     // Change the metadata hash by one character.
     // This changes the evidence after it was signed.
     if (tamperedEvidence.record?.event?.metadata_hash) {
-      const originalHash = tamperedEvidence.record.metadata_hash;
+      const originalHash = tamperedEvidence.record.event.metadata_hash;
 
       const lastCharacter = originalHash.slice(-1);
       const replacement = lastCharacter === "0" ? "1" : "0";
 
-      tamperedEvidence.record.metadata_hash =
+      tamperedEvidence.record.event.metadata_hash =
         originalHash.slice(0, -1) + replacement;
     }
 
@@ -98,7 +98,5 @@ app.post("/api/tamper", async (req, res) => {
   }
 });
 
-// Start backend
-app.listen(4000, () => {
-  console.log("AgentProof backend running on http://localhost:4000");
-});
+// Export for Vercel
+export default app;
