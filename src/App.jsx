@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-const API = "http://localhost:4000";
+const API = "";
 
 function PipelineStep({ number, title, active, done }) {
   return (
@@ -30,6 +30,7 @@ function PipelineStep({ number, title, active, done }) {
             fontSize: 11,
             fontWeight: 900,
             color: "#111827",
+            opacity: 1,
           }}
         >
           {title}
@@ -96,6 +97,8 @@ function Check({ label, value, state }) {
         style={{
           fontSize: 13,
           fontWeight: 700,
+          color: "#111827",
+          opacity: 1,
         }}
       >
         {label}
@@ -466,6 +469,8 @@ export default function App() {
               style={{
                 fontSize: 16,
                 fontWeight: 900,
+                color: "#111827",
+                opacity: 1,
               }}
             >
               AgentProof
@@ -489,6 +494,8 @@ export default function App() {
             gap: 8,
             fontSize: 12,
             fontWeight: 700,
+            color: "#111827",
+            opacity: 1,
           }}
         >
           <span
@@ -504,7 +511,7 @@ export default function App() {
         </div>
       </header>
 
-      {/* CONTENT */}
+      {/* MAIN */}
 
       <main
         style={{
@@ -538,8 +545,6 @@ export default function App() {
             >
               AI AGENT EVIDENCE LAYER
             </div>
-
-            {/* FIXED HERO TITLE */}
 
             <h1
               style={{
@@ -601,7 +606,7 @@ export default function App() {
             </button>
           </div>
 
-          {/* STATUS CARD */}
+          {/* STATUS */}
 
           <div
             style={{
@@ -809,6 +814,9 @@ export default function App() {
                 style={{
                   fontSize: 21,
                   margin: "6px 0 0",
+                  color: "#111827",
+                  fontWeight: 900,
+                  opacity: 1,
                 }}
               >
                 Autonomous Procurement Simulation
@@ -860,6 +868,8 @@ export default function App() {
                   fontWeight: 800,
                   lineHeight: 1.6,
                   marginTop: 8,
+                  color: "#111827",
+                  opacity: 1,
                 }}
               >
                 Compare suppliers and recommend the best
@@ -1023,6 +1033,8 @@ export default function App() {
                       fontSize: 16,
                       fontWeight: 900,
                       marginTop: 4,
+                      color: "#111827",
+                      opacity: 1,
                     }}
                   >
                     {decision.supplier}
@@ -1044,6 +1056,8 @@ export default function App() {
                       fontSize: 16,
                       fontWeight: 900,
                       marginTop: 4,
+                      color: "#111827",
+                      opacity: 1,
                     }}
                   >
                     {decision.score}
@@ -1133,10 +1147,15 @@ export default function App() {
               style={{
                 fontSize: 21,
                 margin: "7px 0 18px",
+                color: "#111827",
+                fontWeight: 900,
+                opacity: 1,
               }}
             >
               Record an agent action
             </h2>
+
+            {/* FIXED TEXTAREA */}
 
             <textarea
               value={action}
@@ -1147,12 +1166,23 @@ export default function App() {
               style={{
                 width: "100%",
                 boxSizing: "border-box",
-                border: "1px solid #d1d5db",
+                border: "1px solid #cbd5e1",
                 borderRadius: 10,
                 padding: 13,
                 fontSize: 13,
                 fontFamily: "inherit",
                 resize: "vertical",
+
+                /* IMPORTANT TEXT VISIBILITY FIX */
+                color: "#111827",
+                background: "#ffffff",
+                opacity: 1,
+
+                /* Makes the text easier to read */
+                WebkitTextFillColor: "#111827",
+                caretColor: "#111827",
+
+                outline: "none",
               }}
             />
 
@@ -1223,6 +1253,9 @@ export default function App() {
               style={{
                 fontSize: 21,
                 margin: "7px 0 18px",
+                color: "#ffffff",
+                fontWeight: 900,
+                opacity: 1,
               }}
             >
               Evidence object
@@ -1307,6 +1340,9 @@ export default function App() {
             style={{
               fontSize: 21,
               margin: "7px 0 15px",
+              color: "#111827",
+              fontWeight: 900,
+              opacity: 1,
             }}
           >
             Evidence checks
@@ -1374,6 +1410,9 @@ export default function App() {
             style={{
               fontSize: 23,
               margin: "7px 0 25px",
+              color: "#111827",
+              fontWeight: 900,
+              opacity: 1,
             }}
           >
             From autonomous action to verifiable evidence
@@ -1416,6 +1455,8 @@ export default function App() {
                     fontSize: 15,
                     fontWeight: 900,
                     marginTop: 8,
+                    color: "#111827",
+                    opacity: 1,
                   }}
                 >
                   {title}
