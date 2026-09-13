@@ -1,6 +1,8 @@
 import { useState } from "react";
 
-const API = "";
+const API = import.meta.env.DEV
+  ? "http://localhost:4000"
+  : "";
 
 function PipelineStep({ number, title, active, done }) {
   return (
@@ -244,6 +246,7 @@ export default function App() {
   async function verifyWithCool() {
     setFlow(7);
     setStatus("checking");
+    setTampered(false);
 
     setMessage(
       "VERIFY → Checking cryptographic evidence..."
@@ -278,6 +281,7 @@ export default function App() {
       if (data.verified) {
         setFlow(8);
         setStatus("verified");
+        setTampered(false);
 
         setMessage(
           "✓ VERIFIED → Cryptographic evidence is valid."
@@ -341,11 +345,7 @@ export default function App() {
       }
 
       if (!data.verified) {
-        // IMPORTANT:
-        // Move out of flow 7 so the button does not stay
-        // stuck on "Verifying..."
         setFlow(8);
-
         setStatus("tampered");
         setTampered(true);
 
@@ -354,8 +354,8 @@ export default function App() {
         );
       } else {
         setFlow(8);
-
         setStatus("verified");
+        setTampered(false);
 
         setMessage(
           "Unexpected result: tampered evidence accepted."
@@ -363,7 +363,6 @@ export default function App() {
       }
     } catch (error) {
       setFlow(8);
-
       setStatus("tampered");
       setTampered(true);
 
@@ -402,7 +401,7 @@ export default function App() {
   const observeDone = flow > 4;
   const commitDone = flow > 5;
   const signDone = flow > 6;
-  const verifyDone = flow === 8;
+  const verifyDone = flow === 8 && status === "verified";
 
   const bindingState =
     tampered
@@ -586,7 +585,7 @@ export default function App() {
                   ? startAgent
                   : nextStep
               }
-              disabled={flow === 7}
+              disabled={flow === 7 || flow === 8}
               style={{
                 marginTop: 20,
                 border: "none",
@@ -602,7 +601,7 @@ export default function App() {
                 fontSize: 13,
                 fontWeight: 900,
                 cursor:
-                  flow === 7
+                  flow === 7 || flow === 8
                     ? "default"
                     : "pointer",
                 boxShadow:
@@ -930,7 +929,9 @@ export default function App() {
                   (n === 2 && flow >= 2) ||
                   (n === 3 && flow >= 3) ||
                   (n === 4 && flow >= 4) ||
-                  (n === 5 && flow === 8 && status === "verified");
+                  (n === 5 &&
+                    flow === 8 &&
+                    status === "verified");
 
                 const active =
                   (n === 1 && flow === 1) ||
