@@ -138,7 +138,6 @@ function Check({ label, value, state }) {
 
 export default function App() {
   const [flow, setFlow] = useState(0);
-
   const [status, setStatus] = useState("idle");
 
   const [message, setMessage] = useState(
@@ -150,11 +149,8 @@ export default function App() {
   );
 
   const [decision, setDecision] = useState(null);
-
   const [recordId, setRecordId] = useState("");
-
   const [evidence, setEvidence] = useState(null);
-
   const [tampered, setTampered] = useState(false);
 
   function startAgent() {
@@ -287,6 +283,7 @@ export default function App() {
           "✓ VERIFIED → Cryptographic evidence is valid."
         );
       } else {
+        setFlow(8);
         setStatus("tampered");
         setTampered(true);
 
@@ -295,6 +292,7 @@ export default function App() {
         );
       }
     } catch (error) {
+      setFlow(8);
       setStatus("tampered");
       setTampered(true);
 
@@ -306,15 +304,11 @@ export default function App() {
 
   function manualVerify() {
     setDecision(null);
-
     setTampered(false);
-
     setEvidence(null);
-
     setRecordId("");
 
     setFlow(4);
-
     setStatus("running");
 
     setMessage(
@@ -347,6 +341,11 @@ export default function App() {
       }
 
       if (!data.verified) {
+        // IMPORTANT:
+        // Move out of flow 7 so the button does not stay
+        // stuck on "Verifying..."
+        setFlow(8);
+
         setStatus("tampered");
         setTampered(true);
 
@@ -354,6 +353,8 @@ export default function App() {
           "✗ EVIDENCE TAMPERED → Modification detected."
         );
       } else {
+        setFlow(8);
+
         setStatus("verified");
 
         setMessage(
@@ -361,6 +362,8 @@ export default function App() {
         );
       }
     } catch (error) {
+      setFlow(8);
+
       setStatus("tampered");
       setTampered(true);
 
@@ -373,7 +376,11 @@ export default function App() {
   function getButtonText() {
     if (flow === 0) return "▶ Start AI Agent";
 
-    if (flow === 8) return "✓ Agent Completed";
+    if (flow === 8 && status === "verified")
+      return "✓ Agent Completed";
+
+    if (flow === 8 && status === "tampered")
+      return "✗ Evidence Tampered";
 
     if (flow === 1) return "Next → Analyze Task";
 
@@ -579,13 +586,15 @@ export default function App() {
                   ? startAgent
                   : nextStep
               }
-              disabled={flow === 7 || flow === 8}
+              disabled={flow === 7}
               style={{
                 marginTop: 20,
                 border: "none",
                 background:
                   flow === 8
-                    ? "#22c55e"
+                    ? status === "tampered"
+                      ? "#dc2626"
+                      : "#22c55e"
                     : "#2563eb",
                 color: "#fff",
                 padding: "14px 22px",
@@ -593,7 +602,7 @@ export default function App() {
                 fontSize: 13,
                 fontWeight: 900,
                 cursor:
-                  flow === 7 || flow === 8
+                  flow === 7
                     ? "default"
                     : "pointer",
                 boxShadow:
@@ -921,7 +930,7 @@ export default function App() {
                   (n === 2 && flow >= 2) ||
                   (n === 3 && flow >= 3) ||
                   (n === 4 && flow >= 4) ||
-                  (n === 5 && flow === 8);
+                  (n === 5 && flow === 8 && status === "verified");
 
                 const active =
                   (n === 1 && flow === 1) ||
@@ -1155,8 +1164,6 @@ export default function App() {
               Record an agent action
             </h2>
 
-            {/* FIXED TEXTAREA */}
-
             <textarea
               value={action}
               onChange={(e) =>
@@ -1172,16 +1179,11 @@ export default function App() {
                 fontSize: 13,
                 fontFamily: "inherit",
                 resize: "vertical",
-
-                /* IMPORTANT TEXT VISIBILITY FIX */
                 color: "#111827",
                 background: "#ffffff",
                 opacity: 1,
-
-                /* Makes the text easier to read */
                 WebkitTextFillColor: "#111827",
                 caretColor: "#111827",
-
                 outline: "none",
               }}
             />
