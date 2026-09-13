@@ -192,8 +192,13 @@ export default function App() {
       setDecision(agentDecision);
 
       setAction(
-        `Demo agent recommended ${agentDecision.supplier} with a score of ${agentDecision.score}. ${agentDecision.reason}`
-      );
+  "Demo agent recommended " +
+    agentDecision.supplier +
+    " with a score of " +
+    agentDecision.score +
+    ". " +
+    agentDecision.reason
+);
 
       setFlow(3);
       setStatus("running");
@@ -282,7 +287,7 @@ export default function App() {
     }
 
     try {
-      const response = await fetch(`${API}/api/verify`, {
+      const response = await fetch(API + "/api/verify", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -330,7 +335,7 @@ export default function App() {
       setTampered(true);
 
       setMessage(
-        `ERROR → ${error.message}`
+        "ERROR → " + error.message
       );
     }
   }
@@ -377,7 +382,7 @@ export default function App() {
     }
 
     try {
-      const response = await fetch(`${API}/api/tamper`, {
+      const response = await fetch(API + "/api/tamper", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -415,7 +420,7 @@ export default function App() {
       setTampered(true);
 
       setMessage(
-        `ERROR → ${error.message}`
+        "ERROR → " + error.message
       );
     }
   }
@@ -1574,3 +1579,4 @@ export default function App() {
   );
 }
 ```
+export default App;
