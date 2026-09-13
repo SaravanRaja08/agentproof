@@ -1,9 +1,6 @@
-```jsx
 import { useState } from "react";
 
-const API = import.meta.env.DEV
-  ? "http://localhost:4000"
-  : "";
+const API = import.meta.env.DEV ? "http://localhost:4000" : "";
 
 function PipelineStep({ number, title, active, done }) {
   return (
@@ -19,25 +16,20 @@ function PipelineStep({ number, title, active, done }) {
           background: done ? "#111827" : active ? "#2563eb" : "#e5e7eb",
           color: done || active ? "#fff" : "#6b7280",
           fontWeight: 900,
-          transition: "0.3s",
-          boxShadow: active ? "0 0 0 5px #dbeafe" : "none",
           flexShrink: 0,
         }}
       >
         {done ? "✓" : number}
       </div>
 
-      <div>
-        <div
-          style={{
-            fontSize: 11,
-            fontWeight: 900,
-            color: "#111827",
-            opacity: 1,
-          }}
-        >
-          {title}
-        </div>
+      <div
+        style={{
+          fontSize: 11,
+          fontWeight: 900,
+          color: "#111827",
+        }}
+      >
+        {title}
       </div>
     </div>
   );
@@ -51,7 +43,6 @@ function Line({ active }) {
         flex: 1,
         minWidth: 20,
         background: active ? "#2563eb" : "#e5e7eb",
-        transition: "0.3s",
       }}
     />
   );
@@ -101,7 +92,6 @@ function Check({ label, value, state }) {
           fontSize: 13,
           fontWeight: 700,
           color: "#111827",
-          opacity: 1,
         }}
       >
         {label}
@@ -139,7 +129,7 @@ function Check({ label, value, state }) {
   );
 }
 
-export default function App() {
+function App() {
   const [flow, setFlow] = useState(0);
   const [status, setStatus] = useState("idle");
 
@@ -192,13 +182,13 @@ export default function App() {
       setDecision(agentDecision);
 
       setAction(
-  "Demo agent recommended " +
-    agentDecision.supplier +
-    " with a score of " +
-    agentDecision.score +
-    ". " +
-    agentDecision.reason
-);
+        "Demo agent recommended " +
+          agentDecision.supplier +
+          " with a score of " +
+          agentDecision.score +
+          ". " +
+          agentDecision.reason
+      );
 
       setFlow(3);
       setStatus("running");
@@ -214,9 +204,7 @@ export default function App() {
       setFlow(4);
       setStatus("running");
 
-      setMessage(
-        "OBSERVE → Capturing the agent's action..."
-      );
+      setMessage("OBSERVE → Capturing the agent's action...");
 
       return;
     }
@@ -225,9 +213,7 @@ export default function App() {
       setFlow(5);
       setStatus("running");
 
-      setMessage(
-        "COMMIT → Creating cryptographic commitment..."
-      );
+      setMessage("COMMIT → Creating cryptographic commitment...");
 
       return;
     }
@@ -245,7 +231,6 @@ export default function App() {
 
     if (flow === 6) {
       await verifyWithCool();
-      return;
     }
   }
 
@@ -254,14 +239,8 @@ export default function App() {
     setStatus("checking");
     setTampered(false);
 
-    setMessage(
-      "VERIFY → Checking cryptographic evidence..."
-    );
+    setMessage("VERIFY → Checking cryptographic evidence...");
 
-    // Live demo fallback.
-    // The real CooL integration remains in the backend/GitHub code.
-    // This allows the deployed Vercel frontend to complete the demo
-    // even when the API route is unavailable.
     if (!import.meta.env.DEV) {
       setTimeout(() => {
         setFlow(8);
@@ -362,7 +341,6 @@ export default function App() {
       "VERIFY → Checking modified evidence..."
     );
 
-    // Live demo fallback.
     if (!import.meta.env.DEV) {
       setTimeout(() => {
         setFlow(8);
@@ -435,17 +413,11 @@ export default function App() {
       return "✗ Evidence Tampered";
 
     if (flow === 1) return "Next → Analyze Task";
-
     if (flow === 2) return "Next → Make Decision";
-
     if (flow === 3) return "Next → OBSERVE";
-
     if (flow === 4) return "Next → COMMIT";
-
     if (flow === 5) return "Next → SIGN";
-
     if (flow === 6) return "Next → VERIFY";
-
     if (flow === 7) return "Verifying...";
 
     return "Next";
@@ -454,25 +426,24 @@ export default function App() {
   const observeDone = flow > 4;
   const commitDone = flow > 5;
   const signDone = flow > 6;
-  const verifyDone = flow === 8 && status === "verified";
+  const verifyDone =
+    flow === 8 && status === "verified";
 
-  const bindingState =
-    tampered
-      ? "tampered"
-      : status === "verified"
-      ? "verified"
-      : status === "checking"
-      ? "checking"
-      : "checking";
+  const bindingState = tampered
+    ? "tampered"
+    : status === "verified"
+    ? "verified"
+    : status === "checking"
+    ? "checking"
+    : "checking";
 
-  const signatureState =
-    tampered
-      ? "tampered"
-      : status === "verified"
-      ? "verified"
-      : status === "checking"
-      ? "checking"
-      : "checking";
+  const signatureState = tampered
+    ? "tampered"
+    : status === "verified"
+    ? "verified"
+    : status === "checking"
+    ? "checking"
+    : "checking";
 
   return (
     <div
@@ -484,8 +455,6 @@ export default function App() {
           "Inter, system-ui, -apple-system, BlinkMacSystemFont, Segoe UI, sans-serif",
       }}
     >
-      {/* HEADER */}
-
       <header
         style={{
           height: 70,
@@ -529,7 +498,6 @@ export default function App() {
                 fontSize: 16,
                 fontWeight: 900,
                 color: "#111827",
-                opacity: 1,
               }}
             >
               AgentProof
@@ -554,7 +522,6 @@ export default function App() {
             fontSize: 12,
             fontWeight: 700,
             color: "#111827",
-            opacity: 1,
           }}
         >
           <span
@@ -570,8 +537,6 @@ export default function App() {
         </div>
       </header>
 
-      {/* MAIN */}
-
       <main
         style={{
           maxWidth: 1250,
@@ -579,8 +544,6 @@ export default function App() {
           padding: "50px 28px 80px",
         }}
       >
-        {/* HERO */}
-
         <section
           style={{
             display: "grid",
@@ -613,7 +576,6 @@ export default function App() {
                 margin: 0,
                 color: "#111827",
                 fontWeight: 900,
-                opacity: 1,
               }}
             >
               Proving What AI Agents Actually Did.
@@ -657,17 +619,11 @@ export default function App() {
                   flow === 7 || flow === 8
                     ? "default"
                     : "pointer",
-                boxShadow:
-                  flow === 8
-                    ? "none"
-                    : "0 7px 20px rgba(37,99,235,0.2)",
               }}
             >
               {getButtonText()}
             </button>
           </div>
-
-          {/* STATUS */}
 
           <div
             style={{
@@ -755,8 +711,6 @@ export default function App() {
           </div>
         </section>
 
-        {/* PIPELINE */}
-
         <section
           style={{
             background: "#fff",
@@ -840,8 +794,6 @@ export default function App() {
           </div>
         </section>
 
-        {/* AGENT SIMULATION */}
-
         <section
           style={{
             background: "#fff",
@@ -853,49 +805,30 @@ export default function App() {
         >
           <div
             style={{
-              display: "flex",
-              justifyContent: "space-between",
-              alignItems: "center",
               marginBottom: 20,
             }}
           >
-            <div>
-              <div
-                style={{
-                  fontSize: 10,
-                  color: "#2563eb",
-                  fontWeight: 900,
-                  letterSpacing: 0.8,
-                }}
-              >
-                DEMO AGENT
-              </div>
-
-              <h2
-                style={{
-                  fontSize: 21,
-                  margin: "6px 0 0",
-                  color: "#111827",
-                  fontWeight: 900,
-                  opacity: 1,
-                }}
-              >
-                Autonomous Procurement Simulation
-              </h2>
-            </div>
-
             <div
               style={{
-                background: "#f1f5f9",
-                color: "#64748b",
-                padding: "7px 10px",
-                borderRadius: 8,
                 fontSize: 10,
+                color: "#2563eb",
+                fontWeight: 900,
+                letterSpacing: 0.8,
+              }}
+            >
+              DEMO AGENT
+            </div>
+
+            <h2
+              style={{
+                fontSize: 21,
+                margin: "6px 0 0",
+                color: "#111827",
                 fontWeight: 900,
               }}
             >
-              DEMO
-            </div>
+              Autonomous Procurement Simulation
+            </h2>
           </div>
 
           <div
@@ -930,7 +863,6 @@ export default function App() {
                   lineHeight: 1.6,
                   marginTop: 8,
                   color: "#111827",
-                  opacity: 1,
                 }}
               >
                 Compare suppliers and recommend the best
@@ -1034,9 +966,7 @@ export default function App() {
                       style={{
                         fontSize: 12,
                         fontWeight:
-                          completed || active
-                            ? 800
-                            : 500,
+                          completed || active ? 800 : 500,
                         color:
                           completed || active
                             ? "#111827"
@@ -1050,8 +980,6 @@ export default function App() {
               })}
             </div>
           </div>
-
-          {/* DECISION */}
 
           {decision && (
             <div
@@ -1097,7 +1025,6 @@ export default function App() {
                       fontWeight: 900,
                       marginTop: 4,
                       color: "#111827",
-                      opacity: 1,
                     }}
                   >
                     {decision.supplier}
@@ -1120,7 +1047,6 @@ export default function App() {
                       fontWeight: 900,
                       marginTop: 4,
                       color: "#111827",
-                      opacity: 1,
                     }}
                   >
                     {decision.score}
@@ -1140,8 +1066,6 @@ export default function App() {
             </div>
           )}
         </section>
-
-        {/* RESULT */}
 
         {status === "verified" && (
           <div
@@ -1178,8 +1102,6 @@ export default function App() {
           </div>
         )}
 
-        {/* MANUAL ACTION */}
-
         <section
           style={{
             display: "grid",
@@ -1212,7 +1134,6 @@ export default function App() {
                 margin: "7px 0 18px",
                 color: "#111827",
                 fontWeight: 900,
-                opacity: 1,
               }}
             >
               Record an agent action
@@ -1220,9 +1141,7 @@ export default function App() {
 
             <textarea
               value={action}
-              onChange={(e) =>
-                setAction(e.target.value)
-              }
+              onChange={(e) => setAction(e.target.value)}
               rows={5}
               style={{
                 width: "100%",
@@ -1235,7 +1154,6 @@ export default function App() {
                 resize: "vertical",
                 color: "#111827",
                 background: "#ffffff",
-                opacity: 1,
                 WebkitTextFillColor: "#111827",
                 caretColor: "#111827",
                 outline: "none",
@@ -1285,8 +1203,6 @@ export default function App() {
             </div>
           </div>
 
-          {/* EVIDENCE */}
-
           <div
             style={{
               background: "#111827",
@@ -1311,7 +1227,6 @@ export default function App() {
                 margin: "7px 0 18px",
                 color: "#ffffff",
                 fontWeight: 900,
-                opacity: 1,
               }}
             >
               Evidence object
@@ -1365,13 +1280,10 @@ export default function App() {
                 wordBreak: "break-all",
               }}
             >
-              {evidence?.binding_hash ||
-                "Waiting for evidence"}
+              {evidence?.binding_hash || "Waiting for evidence"}
             </div>
           </div>
         </section>
-
-        {/* VERIFICATION */}
 
         <section
           style={{
@@ -1398,7 +1310,6 @@ export default function App() {
               margin: "7px 0 15px",
               color: "#111827",
               fontWeight: 900,
-              opacity: 1,
             }}
           >
             Evidence checks
@@ -1441,8 +1352,6 @@ export default function App() {
           />
         </section>
 
-        {/* ARCHITECTURE */}
-
         <section
           style={{
             background: "#fff",
@@ -1468,7 +1377,6 @@ export default function App() {
               margin: "7px 0 25px",
               color: "#111827",
               fontWeight: 900,
-              opacity: 1,
             }}
           >
             From autonomous action to verifiable evidence
@@ -1512,7 +1420,6 @@ export default function App() {
                     fontWeight: 900,
                     marginTop: 8,
                     color: "#111827",
-                    opacity: 1,
                   }}
                 >
                   {title}
@@ -1533,8 +1440,6 @@ export default function App() {
           </div>
         </section>
 
-        {/* DISCLAIMER */}
-
         <div
           style={{
             padding: "17px 20px",
@@ -1554,8 +1459,6 @@ export default function App() {
           decision is correct, fair, safe, or optimal.
         </div>
 
-        {/* FOOTER */}
-
         <footer
           style={{
             borderTop: "1px solid #e5e7eb",
@@ -1566,17 +1469,13 @@ export default function App() {
             fontSize: 11,
           }}
         >
-          <span>
-            AgentProof · Powered by CooL
-          </span>
+          <span>AgentProof · Powered by CooL</span>
 
-          <span>
-            OBSERVE · COMMIT · SIGN · VERIFY
-          </span>
+          <span>OBSERVE · COMMIT · SIGN · VERIFY</span>
         </footer>
       </main>
     </div>
   );
 }
-```
+
 export default App;
