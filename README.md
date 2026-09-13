@@ -1,16 +1,76 @@
-# React + Vite
+# AgentProof
 
-This template provides a minimal setup to get React working in Vite with HMR and some Oxlint rules.
+### Proving What AI Agents Actually Did.
 
-Currently, two official plugins are available:
+AgentProof is a cryptographic evidence layer for AI agents.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+AI agents are increasingly making decisions and taking actions autonomously. Traditional logs can tell us what an application claims happened, but they do not provide strong evidence that the recorded information was not modified afterward.
 
-## React Compiler
+AgentProof uses the **CooL SDK (Cryptographic Observability & on-chain Ledger)** to create tamper-evident, independently verifiable evidence for important agent actions.
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+---
 
-## Expanding the Oxlint configuration
+## The Problem
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and Oxlint's TypeScript related rules in your project.
+AI agents can:
+
+- Make decisions
+- Recommend actions
+- Interact with external systems
+- Execute tasks autonomously
+
+But organizations need a reliable way to answer:
+
+> **"What did the agent actually do?"**
+
+Normal application logs can potentially be changed after the event.
+
+AgentProof adds a cryptographic evidence layer to make important agent actions independently verifiable.
+
+---
+
+## What AgentProof Does
+
+The demo simulates an AI procurement agent.
+
+The agent:
+
+1. Receives a task
+2. Analyzes the task
+3. Makes a decision
+4. Records the action
+5. Creates cryptographic evidence using CooL
+6. Verifies the evidence
+
+The result is:
+
+**VERIFIED ✓**
+
+The demo can then intentionally modify the evidence.
+
+Verification detects the modification:
+
+**EVIDENCE TAMPERED ✗**
+
+---
+
+## Why CooL Matters
+
+CooL is not just included as a library.
+
+It is the core evidence layer of AgentProof.
+
+AgentProof uses:
+
+```text
+AI Agent
+   ↓
+AgentProof
+   ↓
+CooL SDK
+   ↓
+Cryptographic Evidence
+   ↓
+Verification
+   ↓
+VERIFIED / TAMPERED
