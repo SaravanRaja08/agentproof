@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-const API = import.meta.env.DEV ? "http://localhost:4000" : "";
+const API = "http://localhost:4000";
 
 function PipelineStep({ number, title, active, done }) {
   return (
